@@ -1,29 +1,10 @@
-import { PlaywrightTestConfig } from '@playwright/test';
+// playwright.config.ts
+import { defineConfig } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
-  testDir: 'src/scenarios',
-  timeout: 120000,
-  retries: 0,
+export default defineConfig({
+  testDir: './src/scenarios',
   use: {
-    trace: 'on',
-    locale: 'pt-BR',
-    headless: true,
-    viewport: { width: 1280, height: 720 },
-    ignoreHTTPSErrors: true,
-    screenshot: 'on',
-    video: 'off'
+    baseURL: 'https://www.agrosys.com.br',
+    trace: 'on-first-retry',
   },
-  expect: {
-    timeout: 30000
-  },
-  reporter: [
-    [
-      'html',
-      {
-        outputFolder: 'artifacts/report',
-        open: 'never'
-      }
-    ]
-  ]
-};
-export default config;
+});
