@@ -1,27 +1,29 @@
-import { defineConfig } from '@playwright/test';
-import { zerostepPlugin } from '@zerostep/playwright/plugin';
+import { PlaywrightTestConfig } from '@playwright/test';
 
-let plugins = [];
-try {
-  // Evita erro quando o pacote não existe (ex: em CI limpo)
-  const { zerostepPlugin } = require('@zerostep/playwright/plugin');
-  plugins.push(zerostepPlugin());
-} catch {
-  console.warn('⚠️ Plugin @zerostep/playwright não encontrado — ignorando...');
-}
-
-export default defineConfig({
+const config: PlaywrightTestConfig = {
+  testDir: 'src/scenarios',
+  timeout: 120000,
+  retries: 0,
   use: {
-    baseURL: 'https://www.agrosys.com.br',
-<<<<<<< HEAD
-    viewport: { width: 1366, height: 768 },
-=======
->>>>>>> 51ec6cc142fb578c6c822abf22150074cfa55b5c
+    trace: 'on',
+    locale: 'pt-BR',
+    headless: true,
+    viewport: { width: 1280, height: 720 },
+    ignoreHTTPSErrors: true,
+    screenshot: 'on',
+    video: 'off'
   },
-<<<<<<< HEAD
-  reporter: [['list'], ['html', { outputFolder: 'artifacts/report' }]],
-  plugins,
-=======
-  plugins: [zerostepPlugin()],
->>>>>>> 51ec6cc142fb578c6c822abf22150074cfa55b5c
-});
+  expect: {
+    timeout: 30000
+  },
+  reporter: [
+    [
+      'html',
+      {
+        outputFolder: 'artifacts/report',
+        open: 'never'
+      }
+    ]
+  ]
+};
+export default config;
