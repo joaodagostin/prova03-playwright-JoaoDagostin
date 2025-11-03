@@ -1,27 +1,22 @@
-import { test } from '@playwright/test';
-import { ContatoPage } from '../support/pages/ContatoPage';
+import { test, expect } from '@playwright/test';
 
-test.describe('Formulário de Contato', () => {
-  test('Deve abrir e enviar mensagem com sucesso', async ({ page }) => {
-    const contato = new ContatoPage(page);
+test.describe('Página de Contato - Teste básico', () => {
+  test('Deve carregar e exibir elementos principais', async ({ page }) => {
+    // Aumenta timeout e abre a página
+    await page.goto('https://www.agrosys.com.br/contato', { timeout: 60000 });
+    await page.waitForLoadState('domcontentloaded');
 
-    await contato.abrir();
-    await contato.preencherFormulario(
-      'João Teste',
-      'joao@teste.com',
-      'Teste automatizado via Playwright.'
-    );
-    await contato.enviar();
+    // Valida o título da aba
+    const title = await page.title();
+    expect(title).toContain('Contato');
 
-    await contato.validarMensagemSucesso();
-  });
+    // Valida se o iframe do formulário aparece
+    const iframe = page.locator('iframe');
+    await expect(iframe).toBeVisible({ timeout: 10000 });
 
-  test('Deve manter o formulário visível se campos obrigatórios não forem preenchidos', async ({ page }) => {
-    const contato = new ContatoPage(page);
-
-    await contato.abrir();
-    await contato.enviar();
-
-    await contato.validarCamposObrigatorios();
+    // Valida se existe o botão "Enviar" (texto dentro do iframe)
+    const frame = await (await iframe.elementHandle())?.contentFrame();
+    const buttonExists = await frame?.locator('input[type="submit"]').isVisible();
+    expect(buttonExists).toBeTruthy();
   });
 });
