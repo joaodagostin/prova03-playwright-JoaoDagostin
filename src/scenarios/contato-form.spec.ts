@@ -10,10 +10,13 @@ test.describe('Página de Contato - Teste básico', () => {
     // Conteúdo principal
     await expect(page.locator('text=Fale Conosco')).toBeVisible();
 
-    // Verifica se existe formulário (em vez de telefone)
-    await expect(page.locator('form')).toBeVisible();
-
     // Rodapé
     await expect(page.locator('text=©')).toBeVisible();
   });
 });
+
+test('Deve exibir o formulário de contato', async ({ page }) => {
+    await page.goto('https://www.agrosys.com.br/contato');
+    await expect(page.locator('form')).toBeVisible();
+});
+
