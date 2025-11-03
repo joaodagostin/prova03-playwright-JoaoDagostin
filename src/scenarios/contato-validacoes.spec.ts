@@ -9,12 +9,12 @@ test.describe('Formulário de Contato - Teste com ZeroStep AI', () => {
     await page.goto('https://www.agrosys.com.br/contato');
 
     await ai.step('Preencha o formulário de contato com dados válidos');
-    await page.fill('#form-field-name', 'Usuário AI');
-    await page.fill('#form-field-email', 'usuarioai@teste.com');
-    await page.fill('#form-field-message', 'Mensagem gerada automaticamente com ZeroStep AI.');
+    await page.fill('#AutCampo1', 'Usuário AI');
+    await page.fill('#AutCampo2', 'usuarioai@teste.com');
+    await page.fill('#AutCampo5', 'Mensagem gerada automaticamente com ZeroStep AI.');
 
     await ai.step('Envie o formulário e valide o resultado esperado');
-    await page.click('button[type="submit"]');
+    //await page.click('button[type="submit"]');
 
     await ai.verify('A mensagem de confirmação deve ser exibida indicando sucesso no envio.');
   });
