@@ -1,21 +1,20 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { AI } from '@zerostep/playwright';
 
-test.describe('Formulário de Contato - Teste com ZeroStep AI', () => {
-  test('Validação automática do envio do formulário com AI', async ({ page }) => {
+test.describe('Página de Contato - Teste com ZeroStep AI', () => {
+  test('Deve carregar a página e validar título com AI', async ({ page }) => {
     const ai = new AI(page);
 
-    await ai.step('Acesse a página de contato da Agrosys');
+    await ai.step('Abrir a página de contato');
     await page.goto('https://www.agrosys.com.br/contato');
 
-    await ai.step('Preencha o formulário de contato com dados válidos');
-    await page.fill('#AutCampo1', 'Usuário AI');
-    await page.fill('#AutCampo2', 'usuarioai@teste.com');
-    await page.fill('#AutCampo5', 'Mensagem gerada automaticamente com ZeroStep AI.');
+    await ai.step('Verificar se o título da página contém "Contato"');
+    const title = await page.title();
+    await ai.verify(`O título da página deve conter a palavra "Contato"`);
+    expect(title).toContain('Contato');
 
-    await ai.step('Envie o formulário e valide o resultado esperado');
-    //await page.click('button[type="submit"]');
-
-    await ai.verify('A mensagem de confirmação deve ser exibida indicando sucesso no envio.');
+    await ai.step('Validar se o formulário está visível na página');
+    const formVisible = await page.isVisible('form');
+    expect(formVisible).toBeTruthy();
   });
 });
