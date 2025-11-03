@@ -6,9 +6,12 @@ test.describe('Formulário de Contato - Sucesso', () => {
     const contato = new ContatoPage(page);
 
     await contato.abrir();
-    await contato.preencherFormulario('João Teste', 'joao@teste.com', 'Teste automatizado via Playwright.');
+    await contato.preencherFormulario(
+      'João Teste',
+      'joao@teste.com',
+      'Teste automatizado via Playwright.'
+    );
     await contato.enviar();
-
     await contato.validarMensagemSucesso();
   });
 });
@@ -19,7 +22,6 @@ test.describe('Formulário de Contato - Validações', () => {
 
     await contato.abrir();
     await contato.enviar();
-
     await contato.validarCamposObrigatorios();
   });
 });
