@@ -10,7 +10,7 @@ test.describe('Página de Contato - Teste básico', () => {
     expect(title).toContain('Contato');
 
     // Verifica se existe link de WhatsApp ou telefone
-    const telefoneVisivel = await page.locator('text=0800').first().isVisible();
+    const telefoneVisivel = await page.locator('text=Fale').first().isVisible();
     expect(telefoneVisivel).toBeTruthy();
 
     // Verifica se existe o rodapé (footer)
