@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { AI } from 'zerostep';
+import { AI } from '@zerostep/playwright';
 
 test.describe('Formulário de Contato - Teste com ZeroStep AI', () => {
   test('Validação automática do envio do formulário com AI', async ({ page }) => {
